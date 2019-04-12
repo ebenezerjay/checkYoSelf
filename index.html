@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="eng">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,800" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="normalize.css">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<title>Check Yo'Self</title>
+	</head>
+	<body>
+		<header>
+			<h1>Check Yo'Self</h1>
+			<input type="text" id="header-search-input">
+		</header>
+		<aside>
+			<form action="">
+				<label for="form-title-input" name="title">Task Title</label>
+				<input type="text" id="form-title-input">
+				//classes added
+				<label for="form-item-input" name="item"></label>
+				<input type="text" id="form-item-input">
+				<button class="form-make-button" id="form-make-button" type="submit">Make Task List</button>
+				<button class="form-clear-button" id="form-clear-button" type="reset">Clear All</button>
+				<button class="form-filter-button" id="form-filter-button">Filter By Urgency</button>
+			</form>
+		</aside>
+		<main>
+			<section class="section-append-cards">
+				<article>
+					<h2>${taskTitle}</h2>
+					<div class="article-card-circle"></div>
+					<p>${item}</p>
+					<img src="" alt="">
+					<img src="" alt="">
+				</article>
+			</section>
+		</main>
+		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="todo-list.js"></script>
+	</body>
+		
+</html>
