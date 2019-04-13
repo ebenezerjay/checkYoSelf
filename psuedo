@@ -1,0 +1,19 @@
+
+
+write query selectors for all three inputs and all three buttons, card section
+
+add an event listener for all three buttons
+add an event listener for the add item icon
+add an event listener for the delete item icon
+add event listeners for the inputs(disable function)
+
+write a function that will add a classList inbetween the two inputs, that will be called when the add item icon is clicked
+write a function that will listen to the delete item icon and remove that classList
+write a funtion that will disable the buttons if the inputs are empty
+
+write a function that will listen to the make task button and append innerHtml to the card section
+write a function that will clear the input fields when the make task button is clicked
+
+write a function that will save the appended card data into storage
+write a function that will clear all the inputs and the checklist items when the clear button is clicked
+
