@@ -98,3 +98,10 @@ button,
     height: 40px;
     width: 70%;
 }
+
+.append-card {
+	border: 1px solid #c7d3d8;
+	height: 400px;
+	width: 50%;
+
+}
