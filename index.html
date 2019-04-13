@@ -9,25 +9,26 @@
 		<title>Check Yo'Self</title>
 	</head>
 	<body>
-		<header>
-			<h1>Check Yo'Self</h1>
-			<input type="text" id="header-search-input">
+		<header class="flex">
+			<h1>Check <span>Yo'</span>Self</h1>
+			<div class="div-search-input flex">
+				<input type="text" class="header-search-input" id="header-search-input" placeholder="search">
+			</div>
 		</header>
-		<aside>
-			<form action="">
-				<label for="form-title-input" name="title">Task Title</label>
-				<input type="text" id="form-title-input">
-				//classes added
-				<label for="form-item-input" name="item"></label>
-				<input type="text" id="form-item-input">
+		<aside class="flex">
+			<form>
+				<label for="form-title-input" name="title">ToDo Title</label>
+				<input type="text" class="form-title-input" id="form-title-input">
+				<label for="form-item-input" name="item">ToDo Item</label>
+				<input type="text" class="form-item-input" id="form-item-input">
 				<button class="form-make-button" id="form-make-button" type="submit">Make Task List</button>
-				<button class="form-clear-button" id="form-clear-button" type="reset">Clear All</button>
+				<button class="form-clear-button" id="form-clear-button">Clear All</button>
 				<button class="form-filter-button" id="form-filter-button">Filter By Urgency</button>
 			</form>
 		</aside>
-		<main>
-			<section class="section-append-cards">
-				<article>
+		<main class="flex">
+			<section class="append-card-section flex" id="append-card-section">
+				<article class="append-card flex">
 					<h2>${taskTitle}</h2>
 					<div class="article-card-circle"></div>
 					<p>${item}</p>
