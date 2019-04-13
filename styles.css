@@ -34,6 +34,17 @@ h1 {
     width: 32%;
 }
 
+h2 {
+	border-bottom: 2px solid#c7d3d8;
+	color: #1f1f3d;
+	font-weight: 600;
+	height: 50px;
+	margin: 0px;
+	padding: 10px;
+	width: 100%;
+
+}
+
 span {
     color: #fec40e;
 }
@@ -44,8 +55,12 @@ aside {
 }
 
 main {
-		background-color: #fff;
+		background-color: #f3f6f7;
 		grid-area: main;
+}
+
+section {
+	width: 100%;
 }
 
 button {
@@ -61,6 +76,20 @@ input {
 
 label {
 	color: #f3f6f7;
+}
+
+ul {
+	border-bottom: 2px solid #c7d3d8;
+	flex-wrap: wrap;
+	height: 63%;
+	list-style: none;
+	padding-bottom: 10px;
+}
+
+li {
+	color: #1f1f3d;
+	font-size: 20px;
+	width: 100%;
 }
 
 form,
@@ -94,14 +123,63 @@ button,
 }
 
 .header-search-input {
-    align-self: center;
-    height: 40px;
-    width: 70%;
+	align-self: center;
+	background: url('images/search.svg') no-repeat #fff;
+  background-position-x: 2px;
+  background-position-y: center;
+  background-size: 25px;
+	height: 40px;
+  padding-left: 40px;
+	width: 70%;
 }
 
 .append-card {
-	border: 1px solid #c7d3d8;
+	border: 2px solid #c7d3d8;
+	flex-wrap: wrap;
 	height: 400px;
-	width: 50%;
+	margin: 10px;
+	width: 45%;
 
+}
+
+.form-item-input {
+	background: url('images/plus.svg'), linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 85%, rgba(31,31,61,1) 85%, rgba(31,31,61,1) 100%);
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.form-add-icon {
+	background-color: #1f1f3d;
+	height: 30px;
+	width: 30px;
+}
+
+/* .article-list-item {
+
+} */
+
+.li-checkbox-image {
+	height: 20px;
+	width: 30px;
+}
+
+.article-urgent-svg,
+.article-delete-svg {
+	height: 30px;
+	width: 30px;
+}
+
+.article-card-icons {
+	justify-content: space-between;
+	margin: 10px 20px 0px 18px;
+}
+
+.article-urgent-label,
+.article-delete-label {
+	color: #3c6577;
+}
+
+.article-card-icon-labels {
+	justify-content: space-between;
 }
