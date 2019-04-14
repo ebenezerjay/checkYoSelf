@@ -9,7 +9,8 @@ body {
     grid-template-rows: 10% 95%;   
     grid-template-areas: 
     "header header"
-    "sidebar main";
+		"sidebar main";
+		
     height: 100vh;
     margin: 0px;
 }
@@ -60,6 +61,8 @@ main {
 }
 
 section {
+	flex-wrap: wrap;
+	height: fit-content;
 	width: 100%;
 }
 
@@ -79,9 +82,8 @@ label {
 }
 
 ul {
-	border-bottom: 2px solid #c7d3d8;
 	flex-wrap: wrap;
-	height: 63%;
+	height: fit-content;
 	list-style: none;
 	padding-bottom: 10px;
 }
@@ -136,7 +138,7 @@ button,
 .append-card {
 	border: 2px solid #c7d3d8;
 	flex-wrap: wrap;
-	height: 400px;
+	height: fit-content;
 	margin: 10px;
 	width: 45%;
 
@@ -149,10 +151,16 @@ button,
   background-size: contain;
 }
 
-.form-add-icon {
-	background-color: #1f1f3d;
-	height: 30px;
-	width: 30px;
+.form-plus-icon {
+	height: 13%;
+	width: 24%;
+	position: relative;
+	top: 15%;
+	left: 74%;
+}
+
+.form-plus-icon:hover {
+	cursor: pointer;
 }
 
 /* .article-list-item {
@@ -173,6 +181,7 @@ button,
 .article-card-icons {
 	justify-content: space-between;
 	margin: 10px 20px 0px 18px;
+	width: 100%;
 }
 
 .article-urgent-label,
@@ -182,4 +191,10 @@ button,
 
 .article-card-icon-labels {
 	justify-content: space-between;
+	width: 100%;
+}
+
+.article-bottom-section {
+	border-top: 2px solid #c7d3d8;
+	flex-wrap: wrap;
 }

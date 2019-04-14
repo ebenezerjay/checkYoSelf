@@ -19,39 +19,42 @@
 			<form>
 				<label for="form-title-input" name="title">ToDo Title</label>
 				<input type="text" class="form-title-input" id="form-title-input">
-				
+				<section class="form-item-section" id="form-item-section">
+				</section>
+				<!-- <ul class="article-list flex" id="article-list">
+					<li class="article-list-item" id="list-item">
+						<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> List Item
+					</li>
+				</ul> -->
+				<div class="form-plus-icon" id="form-plus-icon"></div></input>
 				<label for="form-item-input" name="item">ToDo Item</label>
 				<input type="text" class="form-item-input" id="form-item-input"> 
 				</input>
-				<button class="form-make-button" id="form-make-button" type="submit">Make Task List</button>
+				<button class="form-make-button" id="form-make-button" type="submit" disabled="true">Make Task List</button>
 				<button class="form-clear-button" id="form-clear-button">Clear All</button>
 				<button class="form-filter-button" id="form-filter-button">Filter By Urgency</button>
 			</form>
 		</aside>
 		<main class="flex">
 			<section class="append-card-section flex" id="append-card-section">
-				<article class="append-card">
+				<!-- <article class="append-card">
 					<h2>Task Title</h2>
 					<ul class="article-list flex" id="article-list">
 						<li class="article-list-item" id="list-item">
 							<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> List Item
 						</li>
-						<li class="article-list-item" id="list-item">
-								<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> List Item
-							</li>
-							<li class="article-list-item" id="list-item">
-									<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> List Item
-								</li>
 					</ul>
-					<div class="article-card-icons flex">
-						<img class="article-urgent-svg" id="article-urgent-svg" src="images/urgent.svg" alt="urgent icon">
-						<img class="article-delete-svg" id="articel-delete-svg" src="images/delete.svg" alt="delete icon">
-					</div>
-					<div class="article-card-icon-labels flex">
-						<label class="article-urgent-label" name="urgent" for="article-urgent-svg">Urgent</label>
-						<label class="article-delete-label" name="delete" for="article-delete-svg">Delete</label>
-					</div>
-				</article>
+					<section class="article-bottom-section flex">
+						<div class="article-card-icons flex">
+							<img class="article-urgent-svg" id="article-urgent-svg" src="images/urgent.svg" alt="urgent icon">
+							<img class="article-delete-svg" id="article-delete-svg" src="images/delete.svg" alt="delete icon">
+						</div>
+						<div class="article-card-icon-labels flex">
+							<label class="article-urgent-label" name="urgent" for="article-urgent-svg">Urgent</label>
+							<label class="article-delete-label" name="delete" for="article-delete-svg">Delete</label>
+						</div>
+					</section>
+				</article> -->
 			</section>
 		</main>
 		<script type="text/javascript" src="main.js"></script>
