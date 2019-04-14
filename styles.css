@@ -164,18 +164,14 @@ button,
 }
 
 /* .article-list-item {
-
+	color: #fff;
 } */
 
-.li-checkbox-image {
-	height: 20px;
-	width: 30px;
-}
-
 .article-urgent-svg,
-.article-delete-svg {
-	height: 30px;
-	width: 30px;
+.article-delete-svg,
+.li-delete-image {
+	height: 23px;
+	width: 23px;
 }
 
 .article-card-icons {

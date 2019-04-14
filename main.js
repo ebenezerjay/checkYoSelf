@@ -17,7 +17,7 @@ var listIds = [];
 
 titleInput.addEventListener('input', disableBtn);
 makeButton.addEventListener('click', onSaveClick);
-// clearButton.addEventListener('click', clearFields);
+clearButton.addEventListener('click', clearFields);
 // filterButton.addEventListener('click', filterUrgency);
 addItemIcon.addEventListener('click', addTaskToList);
 window.addEventListener('load', onPageLoad);
@@ -64,10 +64,11 @@ function saveToDoList() {
 	// e.preventDefault();
 }
 
-function clearFields() {
+function clearFields(e) {
 	titleInput.value = "";
 	itemInput.value = "";
 	itemAddSection.innerHTML = "";
+	e.preventDefault();
 }
 
 function pendingTasks() {
@@ -79,20 +80,24 @@ function addTaskToList(e) {
 	itemAddSection.innerHTML = 
 	`	<ul class="article-list flex" id="article-list">
 			<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
-				<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> ${itemInput.value}
+				<img src="images/delete.svg" class="li-delete-image" id="li-delete-icon"alt=""> ${itemInput.value}
 			</li>
 		</ul>
 	` + itemAddSection.innerHTML;
+	var removeIconArray = document.querySelectorAll(".li-delete-image");
+	console.log(removeIconArray)
+	for (var i = 0; i < removeIconArray.length; i ++) {
+		removeIconArray[i].addEventListener('click', removeItem);
+	}
 	itemInput.value = "";
 	console.log(pendingTaskArray)
 }
-
 
 function addListToDom(id,title,tasks) {
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
 		listItem += `<li class="article-list-item" id="list-item">
-		<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> ${tasks[i]}
+		<img src="images/checkbox.svg" class="li-delete-image" alt=""> ${tasks[i]}
 	</li>`;
 	}
 	cardSection.innerHTML = 
@@ -121,6 +126,13 @@ function loadLists() {
 	}
 }
 
+function toggleDeleteIcon() {
+
+}
+
+function removeItem(e) {
+	event.target.parentElement.remove();
+}
 // function enterKeyPress(e){
 //   if(e.key === 'Enter'){
 //   e.target.blur();
