@@ -1,7 +1,6 @@
 var searchInput = document.querySelector('#header-search-input');
 var titleInput = document.querySelector('#form-title-input');
 var itemInput = document.querySelector('#form-item-input');
-
 var makeButton = document.querySelector('#form-make-button');
 var clearButton = document.querySelector('#form-clear-button');
 var filterButton = document.querySelector('#form-filter-button');
@@ -12,51 +11,71 @@ var addItemIcon = document.querySelector('#form-plus-icon');
 var itemAddSection = document.querySelector('#form-item-section');
 var cardSection = document.querySelector('#append-card-section');
 
-var taskArray = JSON.parse(localStorage.getItem('task-card')) || [];
+var listArray = [];
+var pendingTaskArray = [];
+var listIds = [];
 
 titleInput.addEventListener('input', disableBtn);
 makeButton.addEventListener('click', onSaveClick);
-clearButton.addEventListener('click', clearInputs);
-filterButton.addEventListener('click', filterUrgency);
+// clearButton.addEventListener('click', clearFields);
+// filterButton.addEventListener('click', filterUrgency);
 addItemIcon.addEventListener('click', addTaskToList);
 window.addEventListener('load', onPageLoad);
 
 
 function onPageLoad(e) {
-	retrieveMethods(taskArray);
+	listIds = JSON.parse(localStorage.getItem('masterList')) || [];
+	for (var i = 0; i < listIds.length; i++) {
+		var obj1 = new ToDoList(listIds[i]);
+		obj1.loadFromStorage(listIds[i]);
+		listArray.push(obj1);
+	}
+	loadLists();
+	console.log(listArray)
 	// enterKeyPress(e);
 }
 
 function onSaveClick(e) {
-	addToDoList(e);
+	console.log(listArray)
+	saveToDoList(e);
 	e.preventDefault();
-}
-
-function retrieveMethods(storedLists) {
-  taskArray = [];
-  for (i = 0; i < storedLists.length; i++) {
-    var newList = new ToDoList(storedLists[i].id, storedLists[i].title, storedLists[i].tasks, storedLists[i].urgent);
-    taskArray.push(newList);
-  }
 }
 
 function disableBtn(e) {
-	if (titleInput.value != '') {
+	if (titleInput.value || itemInput.value != '') {
 			makeButton.disabled = false;
+			clearButton.disabled = false;
 		} else {
 			makeButton.disabled = true;
+			clearButton.disabled = true;
 		}
 	}
 	
-function addToDoList(e) {
-	var newList = new ToDoList(Date.now(), titleInput.value);
-	addListToDom(newList);
-	taskArray.push(newList);
-  newList.saveToStorage(taskArray);
-	e.preventDefault();
+function saveToDoList() {
+	console.log(titleInput.value)
+	console.log(listArray)
+	var newList = new ToDoList(Date.now(), titleInput.value,pendingTaskArray);
+	addListToDom(newList.id, newList.title, newList.tasks);
+	listIds.push(newList.id);
+	localStorage.setItem('masterList', JSON.stringify(listIds));
+	listArray.push(newList);
+	newList.saveToStorage();
+	clearFields();
+	// e.preventDefault();
+}
+
+function clearFields() {
+	titleInput.value = "";
+	itemInput.value = "";
+	itemAddSection.innerHTML = "";
+}
+
+function pendingTasks() {
+	pendingTaskArray.push(itemInput.value);
 }
 
 function addTaskToList(e) {
+	pendingTasks();
 	itemAddSection.innerHTML = 
 	`	<ul class="article-list flex" id="article-list">
 			<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
@@ -64,16 +83,23 @@ function addTaskToList(e) {
 			</li>
 		</ul>
 	` + itemAddSection.innerHTML;
+	itemInput.value = "";
+	console.log(pendingTaskArray)
 }
 
+
 function addListToDom(id,title,tasks) {
+	var listItem = "";
+	for (var i = 0; i < tasks.length; i++) {
+		listItem += `<li class="article-list-item" id="list-item">
+		<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> ${tasks[i]}
+	</li>`;
+	}
 	cardSection.innerHTML = 
 	`<article class="append-card" data-id="${id}">
 		<h2>${title}</h2>
 		<ul class="article-list flex" id="article-list">
-			<li class="article-list-item" id="list-item">
-				<img src="images/checkbox.svg" class="li-checkbox-image" alt=""> ${tasks}
-			</li>
+			${listItem}
 		</ul>
 		<section class="article-bottom-section flex">
 		<div class="article-card-icons flex">
@@ -89,6 +115,11 @@ function addListToDom(id,title,tasks) {
 	` + cardSection.innerHTML;
 }
 
+function loadLists() {
+	for (var i = 0; i < listArray.length; i++) {
+		addListToDom(listArray[i].id, listArray[i].title, listArray[i].tasks);
+	}
+}
 
 // function enterKeyPress(e){
 //   if(e.key === 'Enter'){
@@ -96,10 +127,6 @@ function addListToDom(id,title,tasks) {
 //   }
 // }
 
-function clearInputs(e) {
-	
-}
+// function filterUrgency(e) {
 
-function filterUrgency(e) {
-
-}
+// }
