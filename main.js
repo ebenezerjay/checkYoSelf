@@ -4,16 +4,16 @@ var itemInput = document.querySelector('#form-item-input');
 var makeButton = document.querySelector('#form-make-button');
 var clearButton = document.querySelector('#form-clear-button');
 var filterButton = document.querySelector('#form-filter-button');
-var urgentIcon = document.querySelector('#article-urgent-svg');
-var deleteIcon = document.querySelector('#article-delete-svg');
+// var urgentIcon = document.querySelector('#article-urgent-svg');
+
 var addItemIcon = document.querySelector('#form-plus-icon');
 
 var itemAddSection = document.querySelector('#form-item-section');
 var cardSection = document.querySelector('#append-card-section');
 
-var listArray = [];
-var pendingTaskArray = [];
-var listIds = [];
+var listArray = []; 		// array of all list objects
+var pendingTaskArray = []; 		// array of task items before they get added to list
+var listIds = [];			// array id's for each object in listArray
 
 titleInput.addEventListener('input', disableBtn);
 makeButton.addEventListener('click', onSaveClick);
@@ -54,7 +54,11 @@ function disableBtn(e) {
 function saveToDoList() {
 	console.log(titleInput.value)
 	console.log(listArray)
-	var newList = new ToDoList(Date.now(), titleInput.value,pendingTaskArray);
+	var activeTaskArray = [];
+	for (var i = 0; i < pendingTaskArray.length; i++) {
+		activeTaskArray.push(0);
+	}
+	var newList = new ToDoList(Date.now(), titleInput.value,pendingTaskArray,activeTaskArray);
 	addListToDom(newList.id, newList.title, newList.tasks);
 	listIds.push(newList.id);
 	localStorage.setItem('masterList', JSON.stringify(listIds));
@@ -96,8 +100,8 @@ function addTaskToList(e) {
 function addListToDom(id,title,tasks) {
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
-		listItem += `<li class="article-list-item" id="list-item">
-		<img src="images/checkbox.svg" class="li-delete-image" alt=""> ${tasks[i]}
+		listItem += `<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
+		<img src="images/checkbox.svg" class="li-checkbox-image" alt="" id="li-checkbox-svg"> ${tasks[i]}
 	</li>`;
 	}
 	cardSection.innerHTML = 
@@ -118,6 +122,11 @@ function addListToDom(id,title,tasks) {
 		</section>
 	</article>
 	` + cardSection.innerHTML;
+	var checkBoxIcon = document.querySelectorAll('#li-checkbox-svg');
+	for (var i = 0; i < checkBoxIcon.length; i ++) {
+		checkBoxIcon[i].addEventListener('click', toggleCheckBox);
+	}
+	// toggleCheckBox();
 }
 
 function loadLists() {
@@ -126,13 +135,39 @@ function loadLists() {
 	}
 }
 
-function toggleDeleteIcon() {
-
-}
-
 function removeItem(e) {
 	event.target.parentElement.remove();
 }
+
+function toggleCheckBox(e) {
+	var dataId = e.target.parentElement.dataset.id;
+	var taskItem = e.target.parentElement.dataset.task;
+	var parsedDataId = parseInt(dataId);
+	//  find which toDo list object in listArray was just checked
+	for (var i = 0; i < listArray.length; i++) {
+		if (parsedDataId === listArray[i].id) {
+			var pointer = listArray[i];
+
+			//  find which index of the task array matches the task that was clicked on
+			for (var x = 0; x < pointer.tasks.length; x++) {
+				if (taskItem === pointer.tasks[x]) {
+					
+					var isItChecked = pointer.activeTasks[x];
+					if (isItChecked === 0) {
+						pointer.activeTasks[x] = 1;
+						e.target.setAttribute('src', 'images/checkbox-active.svg');
+					} else {
+						pointer.activeTasks[x] = 0;
+						e.target.setAttribute('src', 'images/checkbox.svg');
+					}
+					pointer.saveToStorage();
+				}
+			}
+		}
+	}
+	//  set attribute to active if index value in activeTask array is 0, and vice versa
+}
+
 // function enterKeyPress(e){
 //   if(e.key === 'Enter'){
 //   e.target.blur();
