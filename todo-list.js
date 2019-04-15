@@ -26,11 +26,11 @@ class ToDoList {
     }
 
     updateToDo() {
-
-    }
-
-    updateTask() {
-			
+		}
+		
+    updateTask(tasks,taskItem) {
+			ToDoList.tasks = taskItem;
+			this.saveToStorage(tasks);			
     }
 
 }

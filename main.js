@@ -8,7 +8,7 @@ var filterButton = document.querySelector('#form-filter-button');
 
 var addItemIcon = document.querySelector('#form-plus-icon');
 
-var itemAddSection = document.querySelector('#form-item-section');
+var itemAddSection = document.querySelector('#form-item-ul');
 var cardSection = document.querySelector('#append-card-section');
 
 var listArray = []; 		// array of all list objects
@@ -32,7 +32,6 @@ function onPageLoad(e) {
 	}
 	loadLists();
 	console.log(listArray)
-	// enterKeyPress(e);
 }
 
 function onSaveClick(e) {
@@ -45,9 +44,11 @@ function disableBtn(e) {
 	if (titleInput.value || itemInput.value != '') {
 			makeButton.disabled = false;
 			clearButton.disabled = false;
+			addItemIcon.disabled = false;
 		} else {
 			makeButton.disabled = true;
 			clearButton.disabled = true;
+			addItemIcon.disabled = true;
 		}
 	}
 	
@@ -82,19 +83,17 @@ function pendingTasks() {
 function addTaskToList(e) {
 	pendingTasks();
 	itemAddSection.innerHTML = 
-	`	<ul class="article-list flex" id="article-list">
+		`
 			<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
 				<img src="images/delete.svg" class="li-delete-image" id="li-delete-icon"alt=""> ${itemInput.value}
 			</li>
-		</ul>
-	` + itemAddSection.innerHTML;
+		` + itemAddSection.innerHTML;
 	var removeIconArray = document.querySelectorAll(".li-delete-image");
-	console.log(removeIconArray)
 	for (var i = 0; i < removeIconArray.length; i ++) {
 		removeIconArray[i].addEventListener('click', removeItem);
 	}
 	itemInput.value = "";
-	console.log(pendingTaskArray)
+	e.preventDefault();
 }
 
 function addListToDom(id,title,tasks) {
@@ -126,7 +125,6 @@ function addListToDom(id,title,tasks) {
 	for (var i = 0; i < checkBoxIcon.length; i ++) {
 		checkBoxIcon[i].addEventListener('click', toggleCheckBox);
 	}
-	// toggleCheckBox();
 }
 
 function loadLists() {
@@ -161,18 +159,13 @@ function toggleCheckBox(e) {
 						e.target.setAttribute('src', 'images/checkbox.svg');
 					}
 					pointer.saveToStorage();
+					pointer.updateTask(pointer, taskItem);
 				}
 			}
 		}
 	}
 	//  set attribute to active if index value in activeTask array is 0, and vice versa
 }
-
-// function enterKeyPress(e){
-//   if(e.key === 'Enter'){
-//   e.target.blur();
-//   }
-// }
 
 // function filterUrgency(e) {
 
