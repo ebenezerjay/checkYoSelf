@@ -15,20 +15,25 @@
 				<input type="text" class="header-search-input" id="header-search-input" placeholder="search">
 			</div>
 		</header>
-		<aside class="flex">
-			<form>
-				<label for="form-title-input" name="title">ToDo Title</label>
+		<aside>
+			<form class="aside-form">
+				<label for="form-title-input" class="form-title-label"name="title">ToDo Title</label>
 				<input type="text" class="form-title-input" id="form-title-input">
-				<section class="form-item-section" id="form-item-section">
+				<ul class="form-item-ul" id="form-item-ul">
 					
-				</section>
-				<div class="form-plus-icon" id="form-plus-icon"></div></input>
+				</ul>
 				<label for="form-item-input" name="item">ToDo Item</label>
-				<input type="text" class="form-item-input" id="form-item-input"> 
-				</input>
-				<button class="form-make-button" id="form-make-button" type="submit" disabled="true">Make Task List</button>
-				<button class="form-clear-button" id="form-clear-button" disabled="true">Clear All</button>
-				<button class="form-filter-button" id="form-filter-button">Filter By Urgency</button>
+				<div class="form-align-icon flex">
+					<input type="text" class="form-item-input" id="form-item-input">
+						<button class="form-plus-icon" id="form-plus-icon" disabled="true">
+							<div class="add-line-x">
+								<div class="add-line-y"></div>
+							</div>
+						</button>
+				</div>
+				<button class="form-make-button buttons" id="form-make-button" type="submit" disabled="true">Make Task List</button>
+				<button class="form-clear-button buttons" id="form-clear-button" disabled="true">Clear All</button>
+				<button class="form-filter-button buttons" id="form-filter-button">Filter By Urgency</button>
 			</form>
 		</aside>
 		<main class="flex">
