@@ -6,13 +6,13 @@ body {
     font-family: 'Open Sans', sans-serif;
     display: grid;
     grid-template-columns: 35% 65%;
-    grid-template-rows: 10% 95%;   
+    grid-template-rows: 10% 90%;   
     grid-template-areas: 
     "header header"
 		"sidebar main";
-		
-    height: 100vh;
+		height: 100vh;
     margin: 0px;
+    /* height: fit-content; */
 }
 
 header,
@@ -52,17 +52,18 @@ span {
 
 aside {
     background-color: #5878ab;
-    grid-area: sidebar;
+		grid-area: sidebar;
 }
 
 main {
 		background-color: #f3f6f7;
 		grid-area: main;
+		/* height: fit-content; */
 }
 
 section {
 	flex-wrap: wrap;
-	height: fit-content;
+	/* height: fit-content; */
 	width: 100%;
 }
 
@@ -169,7 +170,8 @@ button,
 
 .article-urgent-svg,
 .article-delete-svg,
-.li-delete-image {
+.li-delete-image,
+.li-checkbox-image {
 	height: 23px;
 	width: 23px;
 }
