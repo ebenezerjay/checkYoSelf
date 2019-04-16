@@ -100,7 +100,7 @@ function addListToDom(id,title,tasks) {
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
 		listItem += `<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
-		<img src="images/checkbox.svg" class="li-checkbox-image" alt="" id="li-checkbox-svg"> ${tasks[i]}
+		<img src="images/checkbox.svg" class="li-checkbox-image" alt="check box icon" id="li-checkbox-svg"> ${tasks[i]}
 	</li>`;
 	}
 	cardSection.innerHTML = 
@@ -123,9 +123,11 @@ function addListToDom(id,title,tasks) {
 	` + cardSection.innerHTML;
 	var checkBoxIcon = document.querySelectorAll('#li-checkbox-svg');
 	for (var i = 0; i < checkBoxIcon.length; i ++) {
-		checkBoxIcon[i].addEventListener('click', toggleCheckBox);
+		checkBoxIcon[i].addEventListener('click', findListClickedOn);
 	}
 }
+
+
 
 function loadLists() {
 	for (var i = 0; i < listArray.length; i++) {
@@ -137,34 +139,40 @@ function removeItem(e) {
 	event.target.parentElement.remove();
 }
 
-function toggleCheckBox(e) {
+// finds which object in list array was clicked on
+function findListClickedOn(e) {
 	var dataId = e.target.parentElement.dataset.id;
-	var taskItem = e.target.parentElement.dataset.task;
 	var parsedDataId = parseInt(dataId);
-	//  find which toDo list object in listArray was just checked
 	for (var i = 0; i < listArray.length; i++) {
 		if (parsedDataId === listArray[i].id) {
-			var pointer = listArray[i];
-
-			//  find which index of the task array matches the task that was clicked on
-			for (var x = 0; x < pointer.tasks.length; x++) {
-				if (taskItem === pointer.tasks[x]) {
-					
-					var isItChecked = pointer.activeTasks[x];
-					if (isItChecked === 0) {
-						pointer.activeTasks[x] = 1;
-						e.target.setAttribute('src', 'images/checkbox-active.svg');
-					} else {
-						pointer.activeTasks[x] = 0;
-						e.target.setAttribute('src', 'images/checkbox.svg');
-					}
-					pointer.saveToStorage();
-					pointer.updateTask(pointer, taskItem);
-				}
-			}
+			findRightCheckBox(e,i);
 		}
 	}
-	//  set attribute to active if index value in activeTask array is 0, and vice versa
+}
+
+//  find which toDo list item in task array was just checked
+function findRightCheckBox(e,i) {
+	var pointer = listArray[i];
+	for (var x = 0; x < pointer.tasks.length; x++) {
+		toggleCheckBox(e,i,x);
+	}
+}
+
+function toggleCheckBox(e,i,x) {
+	var pointer = listArray[i];
+	var taskItem = e.target.parentElement.dataset.task;
+	if (taskItem === pointer.tasks[x]) {			
+		var isItChecked = pointer.activeTasks[x];
+		if (isItChecked === 0) {
+			pointer.activeTasks[x] = 1;
+			e.target.setAttribute('src', 'images/checkbox-active.svg');
+		} else {
+			pointer.activeTasks[x] = 0;
+			e.target.setAttribute('src', 'images/checkbox.svg');
+		}
+		pointer.saveToStorage();
+		pointer.updateTask(pointer, taskItem);
+	}
 }
 
 // function filterUrgency(e) {
