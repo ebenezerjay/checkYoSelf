@@ -6,7 +6,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	display: grid;
 	grid-template-columns: 35% 65%;
-	grid-template-rows: 7% 97%;   
+	grid-template-rows: 7% 99%;   
 	grid-template-areas: 
 	"header header"
 	"sidebar main";
@@ -91,6 +91,11 @@ button {
 	color: #fff;
 }
 
+button,
+input {
+	border-radius: 5px;
+}
+
 .buttons,
 .form-title-input {
 	height: 50px;
@@ -120,10 +125,9 @@ ul,
   background-position-x: 2px;
   background-position-y: center;
 	background-size: 25px;
-	border-radius: 5px;
 	height: 40px;
 	padding-left: 40px;
-	margin-right: 10px;
+	margin-right: 27px;
 	width: 70%;
 }
 
@@ -216,9 +220,10 @@ ul,
 		width: 45%;
 	}
 
-	body {
+	/* body {
+		display: block;
 		height: fit-content;
-	}
+	} */
 
 	.div-search-input {
 		margin-left: 10%;
@@ -226,7 +231,7 @@ ul,
 	}
 
 	.append-card {
-		margin: auto;
+		margin: 10px auto;
 		width: 80%;
 	}
 
@@ -253,6 +258,7 @@ ul,
 
 	.aside-form {
 		margin: 0px 10px;
+		padding-top: 20px;
 	}
 
 	.div-search-input {
