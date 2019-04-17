@@ -93,7 +93,7 @@ function addListToDom(id,title,tasks,urgent) {
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
 		listItem += `<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
-		<img src="images/checkbox.svg" class="li-checkbox-image" alt="check box icon" id="li-checkbox-svg"> ${tasks[i]}
+		<img src="Images/checkbox.svg" class="li-checkbox-image" alt="check box icon" id="li-checkbox-svg"> ${tasks[i]}
 	</li>`;
 	}
 	cardSection.innerHTML = 
@@ -104,8 +104,8 @@ function addListToDom(id,title,tasks,urgent) {
 		</ul>
 		<section class="article-bottom-section flex">
 		<div class="article-card-icons flex">
-			<img class="article-urgent-svg" id="article-urgent-svg" src="images/urgent.svg" data-id="${urgent}" alt="urgent icon">
-			<img class="article-delete-svg" id="article-delete-svg" src="images/delete.svg" alt="delete icon">
+			<img class="article-urgent-svg" id="article-urgent-svg" src="Images/urgent.svg" data-id="${urgent}" alt="urgent icon">
+			<img class="article-delete-svg" id="article-delete-svg" src="Images/delete.svg" alt="delete icon">
 		</div>
 		<div class="article-card-icon-labels flex">
 			<label class="article-urgent-label" name="urgent" for="article-urgent-svg">Urgent</label>
@@ -188,11 +188,11 @@ function changeSrc(e,i,x) {
 	var isItChecked = pointer.activeTasks[x];
 	if (isItChecked === false) {
 		pointer.activeTasks[x] = true;
-		e.target.setAttribute('src', 'images/checkbox-active.svg');
+		e.target.setAttribute('src', 'Images/checkbox-active.svg');
 		listItem.style.color = '#3c6577';
 	} else {
 		pointer.activeTasks[x] = false;
-		e.target.setAttribute('src', 'images/checkbox.svg');
+		e.target.setAttribute('src', 'Images/checkbox.svg');
 	}
 }
 
@@ -202,9 +202,9 @@ function urgentToggle(e) {
 	var parsedUrgentId = parseInt(urgentId);
 	for (var i = 0; i < listArray.length; i++) {
 		if (parsedUrgentId === listArray[i].id) {
-			urgentIcon.setAttribute('src', 'images/urgent-active.svg');
+			urgentIcon.setAttribute('src', 'Images/urgent-active.svg');
 		} else {
-			urgentIcon.setAttribute('src', 'images/urgent.svg');
+			urgentIcon.setAttribute('src', 'Images/urgent.svg');
 		}
 	}
 }
