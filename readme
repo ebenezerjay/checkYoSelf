@@ -1,0 +1,24 @@
+# Check Yo'Self
+## By Ebenezer Jay Ingalsbe
+
+### Intro
+This application allows a user to create todo lists. The user must enter a title
+and a task into the input fields. The user must then click the add icon (inside the item input).
+After a task and a title have been added, the user may then click on the "Make Task List" button
+to add the card to the page. When the card is added to the dom, it also is saved in local storage.
+
+### Learning Goals
+1. Solidify and demonstrate your use of:
+    a. semantic HTML
+    b. clean & organized CSS styles
+    c. DRY JavaScript
+2. localStorage to persist data
+3. Understand the difference between the data model and how the data is displayed on the DOM
+4. Ability to match/recreate a UI and create a great UX
+
+## Comp screenshots
+
+### Desktop 
+![Project-Desktop](desktop-screenshot.png)
+### Mobile
+![Project-Mobile](mobile-screenshot.png)
