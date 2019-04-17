@@ -21,8 +21,10 @@ class ToDoList {
 			this.urgent = idStorage[4];
 		}
 
-    deleteFromStorage() {
-
+    deleteFromStorage(id) {
+		var listArray = this.loadFromStorage();
+    // listArray.splice(id, 1);
+    this.saveToStorage(listArray);
     }
 
     updateToDo() {
