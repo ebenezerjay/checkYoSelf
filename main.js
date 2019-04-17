@@ -4,10 +4,9 @@ var itemInput = document.querySelector('#form-item-input');
 var makeButton = document.querySelector('#form-make-button');
 var clearButton = document.querySelector('#form-clear-button');
 var filterButton = document.querySelector('#form-filter-button');
-// var urgentIcon = document.querySelector('#article-urgent-svg');
-
 var addItemIcon = document.querySelector('#form-plus-icon');
 
+var bodyHeight = document.querySelector('body');
 var itemAddSection = document.querySelector('#form-item-ul');
 var cardSection = document.querySelector('#append-card-section');
 
@@ -16,7 +15,7 @@ var pendingTaskArray = []; 		// array of task items before they get added to lis
 var listIds = [];			// array id's for each object in listArray
 
 titleInput.addEventListener('input', disableBtn);
-makeButton.addEventListener('click', onSaveClick);
+makeButton.addEventListener('click', saveToDoList);
 clearButton.addEventListener('click', clearFields);
 // filterButton.addEventListener('click', filterUrgency);
 addItemIcon.addEventListener('click', addTaskToList);
@@ -31,42 +30,33 @@ function onPageLoad(e) {
 		listArray.push(obj1);
 	}
 	loadLists();
-	console.log(listArray)
-}
-
-function onSaveClick(e) {
-	console.log(listArray)
-	saveToDoList(e);
-	e.preventDefault();
 }
 
 function disableBtn(e) {
 	if (titleInput.value || itemInput.value != '') {
-			makeButton.disabled = false;
-			clearButton.disabled = false;
-			addItemIcon.disabled = false;
-		} else {
-			makeButton.disabled = true;
-			clearButton.disabled = true;
-			addItemIcon.disabled = true;
-		}
+		makeButton.disabled = false;
+		clearButton.disabled = false;
+		addItemIcon.disabled = false;
+	} else {
+		makeButton.disabled = true;
+		clearButton.disabled = true;
+		addItemIcon.disabled = true;
 	}
-	
-function saveToDoList() {
-	console.log(titleInput.value)
-	console.log(listArray)
+}	
+
+function saveToDoList(e) {
 	var activeTaskArray = [];
 	for (var i = 0; i < pendingTaskArray.length; i++) {
-		activeTaskArray.push(0);
+		activeTaskArray.push(false);
 	}
 	var newList = new ToDoList(Date.now(), titleInput.value,pendingTaskArray,activeTaskArray);
-	addListToDom(newList.id, newList.title, newList.tasks);
+	addListToDom(newList.id, newList.title, newList.activeTasks, newList.tasks, newList.urgent);
 	listIds.push(newList.id);
 	localStorage.setItem('masterList', JSON.stringify(listIds));
 	listArray.push(newList);
 	newList.saveToStorage();
 	clearFields();
-	// e.preventDefault();
+	e.preventDefault();
 }
 
 function clearFields(e) {
@@ -83,20 +73,18 @@ function pendingTasks() {
 function addTaskToList(e) {
 	pendingTasks();
 	itemAddSection.innerHTML = 
-		`
-			<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
+		`<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
 				<img src="images/delete.svg" class="li-delete-image" id="li-delete-icon"alt=""> ${itemInput.value}
-			</li>
-		` + itemAddSection.innerHTML;
+			</li>` + itemAddSection.innerHTML;
 	var removeIconArray = document.querySelectorAll(".li-delete-image");
 	for (var i = 0; i < removeIconArray.length; i ++) {
-		removeIconArray[i].addEventListener('click', removeItem);
+		removeIconArray[i].addEventListener('click', removeListCard);
 	}
 	itemInput.value = "";
 	e.preventDefault();
 }
 
-function addListToDom(id,title,tasks) {
+function addListToDom(id,title,tasks,urgent) {
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
 		listItem += `<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
@@ -111,7 +99,7 @@ function addListToDom(id,title,tasks) {
 		</ul>
 		<section class="article-bottom-section flex">
 		<div class="article-card-icons flex">
-			<img class="article-urgent-svg" id="article-urgent-svg" src="images/urgent.svg" alt="urgent icon">
+			<img class="article-urgent-svg" id="article-urgent-svg" src="images/urgent.svg" data-id="${urgent}" alt="urgent icon">
 			<img class="article-delete-svg" id="article-delete-svg" src="images/delete.svg" alt="delete icon">
 		</div>
 		<div class="article-card-icon-labels flex">
@@ -121,22 +109,41 @@ function addListToDom(id,title,tasks) {
 		</section>
 	</article>
 	` + cardSection.innerHTML;
+	var urgentIcon = document.querySelectorAll('#article-urgent-svg');
 	var checkBoxIcon = document.querySelectorAll('#li-checkbox-svg');
+	var deleteIcon = document.querySelectorAll('#article-delete-svg');
 	for (var i = 0; i < checkBoxIcon.length; i ++) {
 		checkBoxIcon[i].addEventListener('click', findListClickedOn);
 	}
-}
-
-
-
-function loadLists() {
-	for (var i = 0; i < listArray.length; i++) {
-		addListToDom(listArray[i].id, listArray[i].title, listArray[i].tasks);
+	for (var i = 0; i < deleteIcon.length; i ++) {
+		deleteIcon[i].addEventListener('click', removeListCard);
+	}
+	for (var i = 0; i < urgentIcon.length; i ++) {
+		urgentIcon[i].addEventListener('click', urgentToggle);
 	}
 }
 
+// brings back all object data
+function loadLists() {
+	for (var i = 0; i < listArray.length; i++) {
+		addListToDom(listArray[i].id, listArray[i].title, listArray[i].tasks, listArray[i].urgent);
+	}
+}
+
+// removes list item from pending tasks
 function removeItem(e) {
 	event.target.parentElement.remove();
+}
+
+// removes list card from dom
+function removeListCard(e) {
+	var newList = new ToDoList();
+	if (e.target.classList.contains('article-delete-svg')) {
+	var listId = e.target.parentElement.parentElement.parentElement.dataset.id
+	newList.deleteFromStorage(parseInt(listId));
+	e.target.parentElement.parentElement.parentElement.remove();
+	event.preventDefault();
+	}
 }
 
 // finds which object in list array was clicked on
@@ -158,23 +165,41 @@ function findRightCheckBox(e,i) {
 	}
 }
 
+//  save to storage and call change src function
 function toggleCheckBox(e,i,x) {
 	var pointer = listArray[i];
 	var taskItem = e.target.parentElement.dataset.task;
+	var taskUpdate = new ToDoList();
 	if (taskItem === pointer.tasks[x]) {			
-		var isItChecked = pointer.activeTasks[x];
-		if (isItChecked === 0) {
-			pointer.activeTasks[x] = 1;
-			e.target.setAttribute('src', 'images/checkbox-active.svg');
-		} else {
-			pointer.activeTasks[x] = 0;
-			e.target.setAttribute('src', 'images/checkbox.svg');
-		}
-		pointer.saveToStorage();
-		pointer.updateTask(pointer, taskItem);
+		changeSrc(e,x);
+		taskUpdate.saveToStorage();
+		taskUpdate.updateTask(pointer, taskItem);
+	}
+}
+		
+// toggle between active states
+function changeSrc(e,i,x) {
+	var pointer = listArray[i];
+	var isItChecked = pointer.activeTasks[x];
+	if (isItChecked === false) {
+		pointer.activeTasks[x] = true;
+		e.target.setAttribute('src', 'images/checkbox-active.svg');
+		listItem.style.color = '#3c6577';
+	} else {
+		pointer.activeTasks[x] = false;
+		e.target.setAttribute('src', 'images/checkbox.svg');
 	}
 }
 
-// function filterUrgency(e) {
-
-// }
+function urgentToggle(e) {
+	var urgentIcon = document.querySelector('#article-urgent-svg');
+	var urgentId = e.target.parentElement.parentElement.parentElement.dataset.id;
+	var parsedUrgentId = parseInt(urgentId);
+	for (var i = 0; i < listArray.length; i++) {
+		if (parsedUrgentId === listArray[i].id) {
+			urgentIcon.setAttribute('src', 'images/urgent-active.svg');
+		} else {
+			urgentIcon.setAttribute('src', 'images/urgent.svg');
+		}
+	}
+}
