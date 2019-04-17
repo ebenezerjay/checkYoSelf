@@ -5,6 +5,7 @@ var makeButton = document.querySelector('#form-make-button');
 var clearButton = document.querySelector('#form-clear-button');
 var filterButton = document.querySelector('#form-filter-button');
 var addItemIcon = document.querySelector('#form-plus-icon');
+// var pendingListItems = document.querySelector('.article-list-item');
 
 var bodyHeight = document.querySelector('body');
 var itemAddSection = document.querySelector('#form-item-ul');
