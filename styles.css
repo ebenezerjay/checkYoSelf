@@ -42,6 +42,14 @@ h2 {
 	width: 100%;
 }
 
+h5 {
+	font-size: 40px;
+	width: 100%;
+	text-align: center;
+	color: #1f1f3d;
+	margin: 20px 0px 0px 20px;
+}
+
 span {
   color: #fec40e;
 }
