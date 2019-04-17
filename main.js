@@ -189,7 +189,6 @@ function changeSrc(e,i,x) {
 	if (isItChecked === false) {
 		pointer.activeTasks[x] = true;
 		e.target.setAttribute('src', 'Images/checkbox-active.svg');
-		listItem.style.color = '#3c6577';
 	} else {
 		pointer.activeTasks[x] = false;
 		e.target.setAttribute('src', 'Images/checkbox.svg');
