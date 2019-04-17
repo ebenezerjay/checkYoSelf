@@ -9,6 +9,7 @@ var addItemIcon = document.querySelector('#form-plus-icon');
 var bodyHeight = document.querySelector('body');
 var itemAddSection = document.querySelector('#form-item-ul');
 var cardSection = document.querySelector('#append-card-section');
+var noListMessage = document.querySelector('.main-no-list-display');
 
 var listArray = []; 		// array of all list objects
 var pendingTaskArray = []; 		// array of task items before they get added to list
@@ -29,6 +30,9 @@ function onPageLoad(e) {
 		obj1.loadFromStorage(listIds[i]);
 		listArray.push(obj1);
 	}
+	if (listArray.length != 0) {
+		noListMessage.style.display = 'none';
+	} 
 	loadLists();
 }
 
