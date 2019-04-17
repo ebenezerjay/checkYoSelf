@@ -3,7 +3,7 @@ class ToDoList {
         this.id = id;			// number holding the id of the todo list
         this.title = title;			// sting holding the title of todo list
 				this.tasks = tasks; 		// array of strings
-				this.activeTasks = activeTasks; 		// array of zeros and 1's that mathes the length of this.tasks, 1 = active,0 = non active
+				this.activeTasks = activeTasks; 		// array of zeros and 1's that mathes the length of this.tasks, true = active, false = non active
         this.urgent = urgent; 
     }
 
@@ -23,7 +23,6 @@ class ToDoList {
 
     deleteFromStorage(id) {
 		var listArray = this.loadFromStorage();
-    // listArray.splice(id, 1);
     this.saveToStorage(listArray);
     }
 
