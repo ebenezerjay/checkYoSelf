@@ -78,12 +78,12 @@ function pendingTasks() {
 function addTaskToList(e) {
 	pendingTasks();
 	itemAddSection.innerHTML = 
-		`<li class="article-list-item" id="list-item" data-id="${itemInput.value}">
-				<img src="images/delete.svg" class="li-delete-image" id="li-delete-icon"alt=""> ${itemInput.value}
+		`<li class="form-list-item" id="list-item" data-id="${itemInput.value}">
+				<img src="Images/delete.svg" class="li-delete-image" id="li-delete-icon" alt=""> ${itemInput.value}
 			</li>` + itemAddSection.innerHTML;
 	var removeIconArray = document.querySelectorAll(".li-delete-image");
 	for (var i = 0; i < removeIconArray.length; i ++) {
-		removeIconArray[i].addEventListener('click', removeListCard);
+		removeIconArray[i].addEventListener('click', removeItem);
 	}
 	itemInput.value = "";
 	e.preventDefault();
@@ -137,14 +137,14 @@ function loadLists() {
 
 // removes list item from pending tasks
 function removeItem(e) {
-	event.target.parentElement.remove();
+	e.target.parentElement.parentElement.remove();
 }
 
 // removes list card from dom
 function removeListCard(e) {
 	var newList = new ToDoList();
 	if (e.target.classList.contains('article-delete-svg')) {
-	var listId = e.target.parentElement.parentElement.parentElement.dataset.id
+	var listId = e.target.parentElement.parentElement.parentElement.parentElement.dataset.id
 	newList.deleteFromStorage(parseInt(listId));
 	e.target.parentElement.parentElement.parentElement.remove();
 	event.preventDefault();

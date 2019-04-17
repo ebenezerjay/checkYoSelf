@@ -158,6 +158,10 @@ ul,
 	font-weight: 600;
 }
 
+.form-list-item {
+	color: #fff;
+}
+
 .add-svg-icon {
 	background-color: #1f1f3d;
   color: #fff;
