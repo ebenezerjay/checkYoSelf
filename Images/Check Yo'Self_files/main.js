@@ -17,20 +17,14 @@ var pendingTaskArray = []; 		// array of task items before they get added to lis
 var listIds = [];			// array id's for each object in listArray
 
 titleInput.addEventListener('input', disableBtn);
-itemInput.addEventListener('input', disableBtn);
-makeButton.addEventListener('click', onMakeClick);
+makeButton.addEventListener('click', saveToDoList);
 clearButton.addEventListener('click', clearFields);
 // filterButton.addEventListener('click', filterUrgency);
 addItemIcon.addEventListener('click', addTaskToList);
 window.addEventListener('load', onPageLoad);
 
-function onMakeClick() {
-	disableBtn();
-	saveToDoList();
-}
 
 function onPageLoad(e) {
-	disableBtn();
 	listIds = JSON.parse(localStorage.getItem('masterList')) || [];
 	for (var i = 0; i < listIds.length; i++) {
 		var obj1 = new ToDoList(listIds[i]);
@@ -41,31 +35,21 @@ function onPageLoad(e) {
 		noListMessage.style.display = 'none';
 	} 
 	loadLists();
-	e.preventDefault();
 }
 
-function disableBtn() {
-	console.log(makeButton)
-	if (titleInput.value === '' || pendingTaskArray.length === 0) {
-		makeButton.disabled = true;
-	} else {
+function disableBtn(e) {
+	if (titleInput.value || itemInput.value != '') {
 		makeButton.disabled = false;
-	}
-
-	if (itemInput.value === '') {
-		addItemIcon.disabled = true;
-	} else {
-		addItemIcon.disabled = false;
-	}
-
-	if (titleInput.value === '' && itemInput.value === '') {
-		clearButton.disabled === true;
-	} else {
 		clearButton.disabled = false;
+		addItemIcon.disabled = false;
+	} else {
+		makeButton.disabled = true;
+		clearButton.disabled = true;
+		addItemIcon.disabled = true;
 	}
 }	
 
-function saveToDoList() {
+function saveToDoList(e) {
 	var activeTaskArray = [];
 	for (var i = 0; i < pendingTaskArray.length; i++) {
 		activeTaskArray.push(false);
@@ -77,12 +61,14 @@ function saveToDoList() {
 	listArray.push(newList);
 	newList.saveToStorage();
 	clearFields();
+	e.preventDefault();
 }
 
-function clearFields() {
+function clearFields(e) {
 	titleInput.value = "";
 	itemInput.value = "";
 	itemAddSection.innerHTML = "";
+	e.preventDefault();
 }
 
 function pendingTasks() {
@@ -91,7 +77,6 @@ function pendingTasks() {
 
 function addTaskToList(e) {
 	pendingTasks();
-	disableBtn();
 	itemAddSection.innerHTML = 
 		`<li class="form-list-item" id="list-item" data-id="${itemInput.value}">
 				<img src="Images/delete.svg" class="li-delete-image" id="li-delete-icon" alt=""> ${itemInput.value}
