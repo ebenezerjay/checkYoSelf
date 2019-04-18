@@ -29,6 +29,7 @@ function onMakeClick() {
 	saveToDoList();
 }
 
+// calls functions on page load, and returns the data from the toDoClass
 function onPageLoad(e) {
 	disableBtn();
 	listIds = JSON.parse(localStorage.getItem('masterList')) || [];
@@ -41,6 +42,7 @@ function onPageLoad(e) {
 	e.preventDefault();
 }
 
+// disables buttons
 function disableBtn() {
 	if (titleInput.value === '' || itemInput.value === '' || pendingTaskArray.length === 0) {
 		makeButton.disabled = true;
@@ -61,7 +63,9 @@ function disableBtn() {
 	}
 }	
 
+// saves new list objects into storage
 function saveToDoList() {
+	// pushes a 0 into the active task array for each value in the pending task array
 	var activeTaskArray = [];
 	for (var i = 0; i < pendingTaskArray.length; i++) {
 		activeTaskArray.push(0);
@@ -81,10 +85,12 @@ function clearFields() {
 	itemAddSection.innerHTML = "";
 }
 
+// pushes the item input value into the pending tasks array
 function pendingTasks() {
 	pendingTaskArray.push(itemInput.value);
 }
 
+// adds the inner html to the form section
 function addTaskToList(e) {
 	pendingTasks();
 	disableBtn();
@@ -102,8 +108,9 @@ function addTaskToList(e) {
 	e.preventDefault();
 }
 
+// adds the pending tasks array into the list object and appends to dom
 function addListToDom(id,title,tasks,urgent) {
-	alert(JSON.stringify(tasks));
+	// inserts inner html for each value in tasks array
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
 		listItem += 
