@@ -22,16 +22,16 @@ class ToDoList {
 		}
 
     deleteFromStorage(id) {
-		var listArray = this.loadFromStorage();
-    this.saveToStorage(listArray);
+		// var listArray = this.loadFromStorage();
+    // this.saveToStorage(listArray);
     }
 
     updateToDo() {
 		}
 		
     updateTask(tasks,taskItem) {
-			ToDoList.tasks = taskItem;
-			this.saveToStorage(tasks);			
+			// ToDoList.tasks = taskItem;
+			// this.saveToStorage(tasks);			
     }
 
 }

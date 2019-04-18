@@ -37,16 +37,12 @@ function onPageLoad(e) {
 		obj1.loadFromStorage(listIds[i]);
 		listArray.push(obj1);
 	}
-	if (listArray.length != 0) {
-		noListMessage.style.display = 'none';
-	} 
 	loadLists();
 	e.preventDefault();
 }
 
 function disableBtn() {
-	console.log(makeButton)
-	if (titleInput.value === '' || pendingTaskArray.length === 0) {
+	if (titleInput.value === '' || itemInput.value === '' || pendingTaskArray.length === 0) {
 		makeButton.disabled = true;
 	} else {
 		makeButton.disabled = false;
@@ -68,10 +64,10 @@ function disableBtn() {
 function saveToDoList() {
 	var activeTaskArray = [];
 	for (var i = 0; i < pendingTaskArray.length; i++) {
-		activeTaskArray.push(false);
+		activeTaskArray.push(0);
 	}
 	var newList = new ToDoList(Date.now(), titleInput.value,pendingTaskArray,activeTaskArray);
-	addListToDom(newList.id, newList.title, newList.activeTasks, newList.tasks, newList.urgent);
+	addListToDom(newList.id, newList.title, newList.tasks, newList.urgent);
 	listIds.push(newList.id);
 	localStorage.setItem('masterList', JSON.stringify(listIds));
 	listArray.push(newList);
@@ -93,9 +89,11 @@ function addTaskToList(e) {
 	pendingTasks();
 	disableBtn();
 	itemAddSection.innerHTML = 
-		`<li class="form-list-item" id="list-item" data-id="${itemInput.value}">
+		`
+			<li class="form-list-item" id="list-item" data-id="${itemInput.value}">
 				<img src="Images/delete.svg" class="li-delete-image" id="li-delete-icon" alt=""> ${itemInput.value}
-			</li>` + itemAddSection.innerHTML;
+			</li>
+		` + itemAddSection.innerHTML;
 	var removeIconArray = document.querySelectorAll(".li-delete-image");
 	for (var i = 0; i < removeIconArray.length; i ++) {
 		removeIconArray[i].addEventListener('click', removeItem);
@@ -105,11 +103,13 @@ function addTaskToList(e) {
 }
 
 function addListToDom(id,title,tasks,urgent) {
+	alert(JSON.stringify(tasks));
 	var listItem = "";
 	for (var i = 0; i < tasks.length; i++) {
-		listItem += `<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
-		<img src="Images/checkbox.svg" class="li-checkbox-image" alt="check box icon" id="li-checkbox-svg"> ${tasks[i]}
-	</li>`;
+		listItem += 
+		`<li class="article-list-item" id="list-item" data-id="${id}" data-task="${tasks[i]}">
+			<img src="Images/checkbox.svg" class="li-checkbox-image" alt="check box icon" id="li-checkbox-svg"> ${tasks[i]}
+		 </li>`;
 	}
 	cardSection.innerHTML = 
 	`<article class="append-card" data-id="${id}">
@@ -170,42 +170,42 @@ function removeListCard(e) {
 function findListClickedOn(e) {
 	var dataId = e.target.parentElement.dataset.id;
 	var parsedDataId = parseInt(dataId);
-	for (var i = 0; i < listArray.length; i++) {
-		if (parsedDataId === listArray[i].id) {
-			findRightCheckBox(e,i);
+	for (var obj = 0; i < listArray.length; i++) {
+		if (parsedDataId === listArray[obj].id) {
+			findRightCheckBox(e,obj);
 		}
 	}
 }
 
 //  find which toDo list item in task array was just checked
-function findRightCheckBox(e,i) {
-	var pointer = listArray[i];
-	for (var x = 0; x < pointer.tasks.length; x++) {
-		toggleCheckBox(e,i,x);
+function findRightCheckBox(e,obj) {
+	var pointer = listArray[obj];
+	for (var item = 0; item < pointer.tasks.length; x++) {
+		toggleCheckBox(e,obj,item);
 	}
 }
 
 //  save to storage and call change src function
-function toggleCheckBox(e,i,x) {
-	var pointer = listArray[i];
+function toggleCheckBox(e,obj,item) {
+	var pointer = listArray[obj];
 	var taskItem = e.target.parentElement.dataset.task;
 	var taskUpdate = new ToDoList();
-	if (taskItem === pointer.tasks[x]) {			
-		changeSrc(e,x);
+	if (taskItem === pointer.tasks[item]) {			
+		changeSrc(e,obj,item);
 		taskUpdate.saveToStorage();
 		taskUpdate.updateTask(pointer, taskItem);
 	}
 }
 		
 // toggle between active states
-function changeSrc(e,i,x) {
-	var pointer = listArray[i];
-	var isItChecked = pointer.activeTasks[x];
-	if (isItChecked === false) {
-		pointer.activeTasks[x] = true;
+function changeSrc(e,obj,item) {
+	var pointer = listArray[obj];
+	var isItChecked = pointer.activeTasks[item];
+	if (isItChecked === 0) {
+		pointer.activeTasks[item] = 1;
 		e.target.setAttribute('src', 'Images/checkbox-active.svg');
 	} else {
-		pointer.activeTasks[x] = false;
+		pointer.activeTasks[item] = 0;
 		e.target.setAttribute('src', 'Images/checkbox.svg');
 	}
 }
